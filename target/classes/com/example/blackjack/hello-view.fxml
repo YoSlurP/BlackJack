@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="5.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.blackjack.HelloController">
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+    </padding>
+   <children>
+      <HBox alignment="CENTER" spacing="5.0">
+         <children>
+            <Label alignment="CENTER" text="Pénz:" />
+            <Label fx:id="ertek" text="0Ft" />
+            <TextField fx:id="belepes" />
+            <Label maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+            <Button mnemonicParsing="false" onAction="#join" text="Csatlakozás:" />
+            <TextField fx:id="server" />
+         </children>
+         <padding>
+            <Insets top="5.0" />
+         </padding>
+      </HBox>
+      <Pane prefHeight="400.0" prefWidth="600.0" style="-fx-border-color: black;">
+         <children>
+            <ImageView fitHeight="500.0" fitWidth="500.0" layoutX="50.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@asztal.png" />
+               </image>
+            </ImageView>
+         </children></Pane>
+      <HBox alignment="CENTER" spacing="5.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#onHitclick" prefWidth="100.0" text="Hit" />
+            <Button mnemonicParsing="false" onAction="#onStandclick" prefWidth="100.0" text="Stand" />
+            <Label maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+            <Label onMouseClicked="#onEgyclick">
+               <graphic>
+                  <ImageView fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@chip1.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Label>
+            <Label onMouseClicked="#on25click">
+               <graphic>
+                  <ImageView fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@chip25.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Label>
+            <Label onMouseClicked="#on50click">
+               <graphic>
+                  <ImageView fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@chip50.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Label>
+            <Label onMouseClicked="#on100click">
+               <graphic>
+                  <ImageView fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@chip100.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Label>
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </HBox>
+   </children>
+</VBox>
