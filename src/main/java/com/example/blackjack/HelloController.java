@@ -2,16 +2,22 @@ package com.example.blackjack;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.scene.text.Text;
 
+import javafx.scene.input.MouseEvent;
 import java.net.*;
 import java.util.LinkedList;
+import java.util.Map;
 
 public class HelloController {
 
@@ -25,15 +31,19 @@ public class HelloController {
     @FXML private VBox bc;
     @FXML private Pane pnJatek;
     @FXML private Button g;
-    public int penz=0;
+    @FXML private ImageView asztal;
     public int bet=0;
     public LinkedList<String >kartyak= new LinkedList<>();
     public LinkedList<String >oszto= new LinkedList<>();
     public int n=580,o=514;
     public int l=0;
+    public String[] tabla= {"1","2","3","4","5"};
 
+    private final String KONAMI_CODE = "UUDDLRLRBA";
+    private int index = 0;
 
     public void initialize(){
+        bc.setOnMouseClicked(this::handleBackgroundClick);
         try {
             socket=new DatagramSocket();
         } catch (Exception e) {
@@ -49,8 +59,38 @@ public class HelloController {
         fogadas.start();
 
     }
+    private void handleBackgroundClick(MouseEvent event) {
+        // Request focus on the rootPane to ensure key events are captured
+        bc.requestFocus();
+    }
 
+    @FXML
+    private void onKeyPressed(javafx.scene.input.KeyEvent event) {
+        // Only process key events if the rootPane has focus
+        if (!bc.isFocused()) return;
 
+        if (event.getText().equalsIgnoreCase(Character.toString(KONAMI_CODE.charAt(index)))) {
+            index++;
+            if (index == KONAMI_CODE.length()) {
+                System.out.println("Konami Code Entered!");
+                openSecretStage();
+                index = 0; // Reset index for next entry
+            }
+        } else {
+            index = 0; // Reset index if a wrong key is pressed
+        }
+    }
+
+    private void openSecretStage() {
+        Stage secretStage = new Stage();
+        StackPane root = new StackPane();
+        root.getChildren().add(new ImageView(new Image(getClass().getResourceAsStream("cheat.png"))));
+        Scene scene = new Scene(root, 400, 565);
+        secretStage.setScene(scene);
+        secretStage.setTitle("Cheatsheat");
+        secretStage.getIcons().add(new Image(getClass().getResourceAsStream("card.png")));
+        secretStage.show();
+    }
 
     public void join(){
         kuld("join:", server.getText(),678);
@@ -117,6 +157,26 @@ public class HelloController {
         if(s[0].equals("balance")){
             ertek.setText(s[1]+ertek.getText()+" Ft");
         }
+
+    }
+    public int a=1;
+    public void onRigthclick(){
+        if(a==5){
+            a=0;
+        }
+
+        asztal.setImage(new Image(getClass().getResourceAsStream("asztal"+tabla[a]+".png")));
+        a++;
+
+
+    }
+    public void onLeftclick(){
+        if(a==0){
+            a=5;
+        }
+        a--;
+        asztal.setImage(new Image(getClass().getResourceAsStream("asztal"+tabla[a]+".png")));
+
 
     }
     public void onResetClick(){
