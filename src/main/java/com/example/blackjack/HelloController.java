@@ -28,16 +28,22 @@ public class HelloController {
     @FXML private TextField server;
     @FXML private Label ertek;
     @FXML private Label tet;
+    @FXML private Label countS;
+    @FXML private Label countK;
     @FXML private VBox bc;
     @FXML private Pane pnJatek;
     @FXML private Button g;
     @FXML private ImageView asztal;
     public int bet=0;
-    public LinkedList<String >kartyak= new LinkedList<>();
-    public LinkedList<String >oszto= new LinkedList<>();
-    public int n=580,o=514;
+    public LinkedList<ImageView >kartyak= new LinkedList<>();
+    public LinkedList<ImageView >oszto= new LinkedList<>();
+    public LinkedList<ImageView >jatekos= new LinkedList<>();
+    public int n=610,o=534;
+    public int r=708,e=307;
     public int l=0;
     public String[] tabla= {"1","2","3","4","5"};
+    public int[] cordx= {978,907,791,610,453,346,236};
+    public int[] cordy= {402,503,574,636,596,537,402};
 
     private final String KONAMI_CODE = "UUDDLRLRBA";
     private int index = 0;
@@ -60,13 +66,11 @@ public class HelloController {
 
     }
     private void handleBackgroundClick(MouseEvent event) {
-        // Request focus on the rootPane to ensure key events are captured
         bc.requestFocus();
     }
 
     @FXML
     private void onKeyPressed(javafx.scene.input.KeyEvent event) {
-        // Only process key events if the rootPane has focus
         if (!bc.isFocused()) return;
 
         if (event.getText().equalsIgnoreCase(Character.toString(KONAMI_CODE.charAt(index)))) {
@@ -74,18 +78,21 @@ public class HelloController {
             if (index == KONAMI_CODE.length()) {
                 System.out.println("Konami Code Entered!");
                 openSecretStage();
-                index = 0; // Reset index for next entry
+                index = 0;
             }
         } else {
-            index = 0; // Reset index if a wrong key is pressed
+            index = 0;
         }
     }
 
     private void openSecretStage() {
+        ImageView cheat= new ImageView(new Image(getClass().getResourceAsStream("cheat.png")));
         Stage secretStage = new Stage();
         StackPane root = new StackPane();
-        root.getChildren().add(new ImageView(new Image(getClass().getResourceAsStream("cheat.png"))));
-        Scene scene = new Scene(root, 400, 565);
+        cheat.setFitHeight(700);
+        cheat.setFitWidth(500);
+        root.getChildren().add(cheat);
+        Scene scene = new Scene(root, 500, 700);
         secretStage.setScene(scene);
         secretStage.setTitle("Cheatsheat");
         secretStage.getIcons().add(new Image(getClass().getResourceAsStream("card.png")));
@@ -95,9 +102,10 @@ public class HelloController {
     public void join(){
         kuld("join:", server.getText(),678);
     }
+
     private void kuld(String uzenet, String ip, int port) {
         try {
-            byte[] adat = uzenet.getBytes("utf-8");
+            byte[] adat = uzenet.getBytes("UTF-8");
             InetAddress ipv4 = Inet4Address.getByName(ip);
             DatagramPacket packet = new DatagramPacket(adat, adat.length, ipv4, port);
             socket.send(packet);
@@ -117,42 +125,82 @@ public class HelloController {
             } catch (Exception e) { e.printStackTrace(); }
         }
     }
+
+
     private void onFogad(String uzenet, String ip, int port) {
         String[] s=uzenet.split(":");
         if(s[0].equals("joined")){
             ertek.setText(s[1]+" Ft");
             bet=Integer.parseInt(s[1]);
         }
+
         if(s[0].equals("start")) {
             g.setDisable(true);
+            for(int i=0;i<Integer.parseInt(s[1]);i++){
+                ImageView p=new ImageView(new Image(getClass().getResourceAsStream("Male.png")));
+                jatekos.add(p);
+                p.setFitWidth(128);p.setFitHeight(128);
+                p.setLayoutX(cordx[i]);
+                p.setLayoutY(cordy[i]);
+                pnJatek.getChildren().add(p);
+            }
         }
-        if(s[0].equals("s")){
-            ImageView asd=new ImageView(new Image(getClass().getResourceAsStream(s[1].charAt(0) + s[1].charAt(1) + ".png")));
-            asd.setLayoutX(532);asd.setLayoutY(209);asd.setFitHeight(80);asd.setFitWidth(70);
-            pnJatek.getChildren().add(asd);
 
-            ImageView as=new ImageView(new Image(getClass().getResourceAsStream("card back black.png")));
-            as.setLayoutX(649);as.setLayoutY(209);as.setFitHeight(80);as.setFitWidth(70);
-            pnJatek.getChildren().add(as);
-            oszto.add(s[1].charAt(0) + s[1].charAt(1) + ".png");
+        if(s[0].equals("s")){
+            if(oszto.size()==0){
+                ImageView asd=new ImageView(new Image(getClass().getResourceAsStream(s[1].charAt(0) + s[1].charAt(1) + ".png")));
+                asd.setLayoutX(r);asd.setLayoutY(e);asd.setFitHeight(80);asd.setFitWidth(70);
+                pnJatek.getChildren().add(asd);
+                ImageView as=new ImageView(new Image(getClass().getResourceAsStream("card back black.png")));
+                as.setLayoutX(r-80);as.setLayoutY(e);as.setFitHeight(80);as.setFitWidth(70);
+                pnJatek.getChildren().add(as);
+                oszto.add(asd);
+                oszto.add(as);
+                if(s[1].charAt(1)=='A'){
+                    s[1].equals("1/11");
+                }
+                countS.setText(String.valueOf(Integer.parseInt(countS.getText()+s[1])));
+            }else if(oszto.size()==2){
+                oszto.get(1).setImage(new Image(getClass().getResourceAsStream(s[1].charAt(0) + s[1].charAt(1) + ".png")));
+                oszto.add(new ImageView());
+            }else {
+                r=r-80;
+                ImageView asd=new ImageView(new Image(getClass().getResourceAsStream(s[1].charAt(0) + s[1].charAt(1) + ".png")));
+                asd.setLayoutX(r-80);asd.setLayoutY(e);asd.setFitHeight(80);asd.setFitWidth(70);
+                countS.setText(String.valueOf(Integer.parseInt(countS.getText()+s[1])));
+                pnJatek.getChildren().add(asd);
+            }
         }
 
         if(s[0].equals("paid")){
             ertek.setText(s[1]+" Ft");
         }
         if(s[0].equals("k")){
-            for(int i=0; i<kartyak.size();i++){
-                ImageView a=new ImageView(new Image(getClass().getResourceAsStream(s[1].charAt(0) + s[1].charAt(1) + ".png")));
-                a.setLayoutX(n);a.setLayoutY(o);
-                a.setFitHeight(80);a.setFitWidth(70);
-                pnJatek.getChildren().add(a);
-                kartyak.add(s[1].charAt(0) + s[1].charAt(1) + ".png");
-            }
-
+            ImageView a=new ImageView(new Image(getClass().getResourceAsStream(s[1].charAt(0) + s[1].charAt(1) + ".png")));
+            a.setLayoutX(610+40*kartyak.size());a.setLayoutY(534+40*kartyak.size());
+            a.setFitHeight(80);a.setFitWidth(70);
+            pnJatek.getChildren().add(a);
+            countK.setText(String.valueOf(Integer.parseInt(countK.getText()+s[1])));
+            kartyak.add(a);
         }
         if(s[0].equals("end")){
             n=580;o=514;
             g.setDisable(false);
+            for(int i=0;i<oszto.size();i++){
+                pnJatek.getChildren().remove(oszto.get(i));
+            }
+            oszto.clear();
+            for(int i=0;i<kartyak.size();i++){
+                pnJatek.getChildren().remove(kartyak.get(i));
+            }
+            kartyak.clear();
+            for(int i=0;i<jatekos.size();i++){
+                pnJatek.getChildren().remove(jatekos.get(i));
+            }
+            jatekos.clear();
+            countS.setText("0");
+            countK.setText("0");
+
         }
         if(s[0].equals("balance")){
             ertek.setText(s[1]+ertek.getText()+" Ft");
@@ -164,7 +212,6 @@ public class HelloController {
         if(a==5){
             a=0;
         }
-
         asztal.setImage(new Image(getClass().getResourceAsStream("asztal"+tabla[a]+".png")));
         a++;
 
