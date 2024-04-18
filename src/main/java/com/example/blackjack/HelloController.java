@@ -100,7 +100,7 @@ public class HelloController {
     }
 
     public void join(){
-        kuld("join:", server.getText(),678);
+        kuld("join:"+belepes.getText(), server.getText(),678);
     }
 
     private void kuld(String uzenet, String ip, int port) {
@@ -149,10 +149,10 @@ public class HelloController {
         if(s[0].equals("s")){
             if(oszto.size()==0){
                 ImageView asd=new ImageView(new Image(getClass().getResourceAsStream(s[1].charAt(0) + s[1].charAt(1) + ".png")));
-                asd.setLayoutX(r);asd.setLayoutY(e);asd.setFitHeight(80);asd.setFitWidth(70);
+                asd.setLayoutX(r);asd.setLayoutY(e);asd.setFitHeight(100);asd.setFitWidth(90);
                 pnJatek.getChildren().add(asd);
                 ImageView as=new ImageView(new Image(getClass().getResourceAsStream("card back black.png")));
-                as.setLayoutX(r-80);as.setLayoutY(e);as.setFitHeight(80);as.setFitWidth(70);
+                as.setLayoutX(r-80);as.setLayoutY(e);as.setFitHeight(100);as.setFitWidth(90);
                 pnJatek.getChildren().add(as);
                 oszto.add(asd);
                 oszto.add(as);
@@ -166,7 +166,7 @@ public class HelloController {
             }else {
                 r=r-80;
                 ImageView asd=new ImageView(new Image(getClass().getResourceAsStream(s[1].charAt(0) + s[1].charAt(1) + ".png")));
-                asd.setLayoutX(r-80);asd.setLayoutY(e);asd.setFitHeight(80);asd.setFitWidth(70);
+                asd.setLayoutX(r-80);asd.setLayoutY(e);asd.setFitHeight(100);asd.setFitWidth(90);
                 countS.setText(String.valueOf(Integer.parseInt(countS.getText()+s[1])));
                 pnJatek.getChildren().add(asd);
             }
@@ -178,7 +178,7 @@ public class HelloController {
         if(s[0].equals("k")){
             ImageView a=new ImageView(new Image(getClass().getResourceAsStream(s[1].charAt(0) + s[1].charAt(1) + ".png")));
             a.setLayoutX(610+40*kartyak.size());a.setLayoutY(534+40*kartyak.size());
-            a.setFitHeight(80);a.setFitWidth(70);
+            a.setFitHeight(100);a.setFitWidth(90);
             pnJatek.getChildren().add(a);
             countK.setText(String.valueOf(Integer.parseInt(countK.getText()+s[1])));
             kartyak.add(a);
