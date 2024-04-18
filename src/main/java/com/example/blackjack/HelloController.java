@@ -100,7 +100,7 @@ public class HelloController {
     }
 
     public void join(){
-        kuld("join:", server.getText(),678);
+        kuld("join:"+belepes, server.getText(),678);
     }
 
     private void kuld(String uzenet, String ip, int port) {
