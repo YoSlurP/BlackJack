@@ -154,7 +154,7 @@ public class HelloController {
                 asd.setLayoutX(r);asd.setLayoutY(e);asd.setFitHeight(100);asd.setFitWidth(90);
                 pnJatek.getChildren().add(asd);
                 ImageView as=new ImageView(new Image(getClass().getResourceAsStream("card back black.png")));
-                as.setLayoutX(r-80);as.setLayoutY(e);as.setFitHeight(100);as.setFitWidth(90);
+                as.setLayoutX(r-100);as.setLayoutY(e);as.setFitHeight(100);as.setFitWidth(90);
                 pnJatek.getChildren().add(as);
                 oszto.add(asd);
                 oszto.add(as);
@@ -168,7 +168,7 @@ public class HelloController {
             }else {
                 r=r-80;
                 ImageView asd=new ImageView(new Image(getClass().getResourceAsStream(s[1]+ ".png")));
-                asd.setLayoutX(r-80);asd.setLayoutY(e);asd.setFitHeight(100);asd.setFitWidth(90);
+                asd.setLayoutX(r-100);asd.setLayoutY(e);asd.setFitHeight(100);asd.setFitWidth(90);
                 //countS.setText(String.valueOf(Integer.parseInt(countS.getText()+s[1])));
                 pnJatek.getChildren().add(asd);
             }
@@ -247,7 +247,6 @@ public class HelloController {
     }
     public void onKilepclick(){
         kuld("exit",server.getText(),678);
-
         n=580;o=514;
         g.setDisable(false);
         for(int i=0;i<oszto.size();i++){
