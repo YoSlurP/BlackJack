@@ -131,7 +131,6 @@ public class HelloController {
 
     private void onFogad(String uzenet, String ip, int port) {
         String[] s=uzenet.split(":");
-        System.out.printf(uzenet);
         if(s[0].equals("joined")){
             bet=Integer.parseInt(s[1]);
             ertek.setText(s[1]+" Ft");
@@ -150,7 +149,8 @@ public class HelloController {
 
         if(s[0].equals("s")){
             if(oszto.size()==0){
-                ImageView asd=new ImageView(new Image(getClass().getResourceAsStream(s[1].charAt(0) + s[1].charAt(1) + ".png")));
+                System.out.printf(uzenet);
+                ImageView asd=new ImageView(new Image(getClass().getResourceAsStream(s[1]+".png")));
                 asd.setLayoutX(r);asd.setLayoutY(e);asd.setFitHeight(100);asd.setFitWidth(90);
                 pnJatek.getChildren().add(asd);
                 ImageView as=new ImageView(new Image(getClass().getResourceAsStream("card back black.png")));
@@ -163,11 +163,11 @@ public class HelloController {
                 }
                 //countS.setText(String.valueOf(Integer.parseInt(countS.getText()+s[1])));
             }else if(oszto.size()==2){
-                oszto.get(1).setImage(new Image(getClass().getResourceAsStream(s[1].charAt(0) + s[1].charAt(1) + ".png")));
+                oszto.get(1).setImage(new Image(getClass().getResourceAsStream(s[1]+ ".png")));
                 oszto.add(new ImageView());
             }else {
                 r=r-80;
-                ImageView asd=new ImageView(new Image(getClass().getResourceAsStream(s[1].charAt(0) + s[1].charAt(1) + ".png")));
+                ImageView asd=new ImageView(new Image(getClass().getResourceAsStream(s[1]+ ".png")));
                 asd.setLayoutX(r-80);asd.setLayoutY(e);asd.setFitHeight(100);asd.setFitWidth(90);
                 //countS.setText(String.valueOf(Integer.parseInt(countS.getText()+s[1])));
                 pnJatek.getChildren().add(asd);
@@ -178,7 +178,8 @@ public class HelloController {
             ertek.setText(s[1]+" Ft");
         }
         if(s[0].equals("k")){
-            ImageView a=new ImageView(new Image(getClass().getResourceAsStream(s[1].charAt(0) + s[1].charAt(1) + ".png")));
+            System.out.printf(uzenet);
+            ImageView a=new ImageView(new Image(getClass().getResourceAsStream(s[1]+ ".png")));
             a.setLayoutX(610+40*kartyak.size());a.setLayoutY(534+40*kartyak.size());
             a.setFitHeight(100);a.setFitWidth(90);
             pnJatek.getChildren().add(a);
@@ -241,10 +242,30 @@ public class HelloController {
     }
 
     public void sendTet(){
+
         kuld("bet:"+bet,server.getText(),678);
     }
     public void onKilepclick(){
         kuld("exit",server.getText(),678);
+
+        n=580;o=514;
+        g.setDisable(false);
+        for(int i=0;i<oszto.size();i++){
+            pnJatek.getChildren().remove(oszto.get(i));
+        }
+        oszto.clear();
+        for(int i=0;i<kartyak.size();i++){
+            pnJatek.getChildren().remove(kartyak.get(i));
+        }
+        kartyak.clear();
+        for(int i=0;i<jatekos.size();i++){
+            pnJatek.getChildren().remove(jatekos.get(i));
+        }
+        jatekos.clear();
+        countS.setText("0");
+        countK.setText("0");
+        penz=0;
+        tet.setText("0 Ft");
     }
 
     public void on100click() {
