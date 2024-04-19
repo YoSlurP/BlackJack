@@ -175,12 +175,12 @@ public class HelloController {
         }
 
         if(s[0].equals("paid")){
-            ertek.setText(s[1]+" Ft");
+            ertek.setText(s[1]+ertek.getText()+" Ft");
         }
         if(s[0].equals("k")){
             System.out.printf(uzenet);
             ImageView a=new ImageView(new Image(getClass().getResourceAsStream(s[1]+ ".png")));
-            a.setLayoutX(610+40*kartyak.size());a.setLayoutY(534+40*kartyak.size());
+            a.setLayoutX(610+40*kartyak.size());a.setLayoutY(534-40*kartyak.size());
             a.setFitHeight(100);a.setFitWidth(90);
             pnJatek.getChildren().add(a);
             //countK.setText(String.valueOf(Integer.parseInt(countK.getText()+s[1])));
@@ -242,7 +242,7 @@ public class HelloController {
     }
 
     public void sendTet(){
-
+        ertek.setText(Integer.parseInt(ertek.getText().split(" ")[0])-(bet)+" Ft");
         kuld("bet:"+bet,server.getText(),678);
     }
     public void onKilepclick(){
