@@ -35,6 +35,7 @@ public class HelloController {
     @FXML private Button g;
     @FXML private ImageView asztal;
     public int bet=0;
+    public int penz=0;
     public LinkedList<ImageView >kartyak= new LinkedList<>();
     public LinkedList<ImageView >oszto= new LinkedList<>();
     public LinkedList<ImageView >jatekos= new LinkedList<>();
@@ -42,8 +43,8 @@ public class HelloController {
     public int r=708,e=307;
     public int l=0;
     public String[] tabla= {"1","2","3","4","5"};
-    public int[] cordx= {978,907,791,610,453,346,236};
-    public int[] cordy= {402,503,574,636,596,537,402};
+    public int[] cordx= {610,907,791,978,453,346,236};
+    public int[] cordy= {636,503,574,402,596,537,402};
 
     private final String KONAMI_CODE = "UUDDLRLRBA";
     private int index = 0;
@@ -51,7 +52,7 @@ public class HelloController {
     public void initialize(){
         bc.setOnMouseClicked(this::handleBackgroundClick);
         try {
-            socket=new DatagramSocket();
+            socket=new DatagramSocket(678);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -110,6 +111,7 @@ public class HelloController {
             DatagramPacket packet = new DatagramPacket(adat, adat.length, ipv4, port);
             socket.send(packet);
         } catch (Exception e) { e.printStackTrace(); }
+
     }
 
     private void fogad() { // Külön szálon!
@@ -129,13 +131,13 @@ public class HelloController {
 
     private void onFogad(String uzenet, String ip, int port) {
         String[] s=uzenet.split(":");
+        System.out.printf(uzenet);
         if(s[0].equals("joined")){
-            ertek.setText(s[1]+" Ft");
             bet=Integer.parseInt(s[1]);
+            ertek.setText(s[1]+" Ft");
         }
 
         if(s[0].equals("start")) {
-            g.setDisable(true);
             for(int i=0;i<Integer.parseInt(s[1]);i++){
                 ImageView p=new ImageView(new Image(getClass().getResourceAsStream("Male.png")));
                 jatekos.add(p);
@@ -159,7 +161,7 @@ public class HelloController {
                 if(s[1].charAt(1)=='A'){
                     s[1].equals("1/11");
                 }
-                countS.setText(String.valueOf(Integer.parseInt(countS.getText()+s[1])));
+                //countS.setText(String.valueOf(Integer.parseInt(countS.getText()+s[1])));
             }else if(oszto.size()==2){
                 oszto.get(1).setImage(new Image(getClass().getResourceAsStream(s[1].charAt(0) + s[1].charAt(1) + ".png")));
                 oszto.add(new ImageView());
@@ -167,7 +169,7 @@ public class HelloController {
                 r=r-80;
                 ImageView asd=new ImageView(new Image(getClass().getResourceAsStream(s[1].charAt(0) + s[1].charAt(1) + ".png")));
                 asd.setLayoutX(r-80);asd.setLayoutY(e);asd.setFitHeight(100);asd.setFitWidth(90);
-                countS.setText(String.valueOf(Integer.parseInt(countS.getText()+s[1])));
+                //countS.setText(String.valueOf(Integer.parseInt(countS.getText()+s[1])));
                 pnJatek.getChildren().add(asd);
             }
         }
@@ -180,7 +182,7 @@ public class HelloController {
             a.setLayoutX(610+40*kartyak.size());a.setLayoutY(534+40*kartyak.size());
             a.setFitHeight(100);a.setFitWidth(90);
             pnJatek.getChildren().add(a);
-            countK.setText(String.valueOf(Integer.parseInt(countK.getText()+s[1])));
+            //countK.setText(String.valueOf(Integer.parseInt(countK.getText()+s[1])));
             kartyak.add(a);
         }
         if(s[0].equals("end")){
@@ -200,6 +202,8 @@ public class HelloController {
             jatekos.clear();
             countS.setText("0");
             countK.setText("0");
+            penz=0;
+            tet.setText("0 Ft");
 
         }
         if(s[0].equals("balance")){
@@ -246,25 +250,29 @@ public class HelloController {
     public void on100click() {
         if (Integer.parseInt(ertek.getText().split(" ")[0]) > 100) {
             bet -= 100;
-            tet.setText(bet + " Ft");
+            penz+=100;
+            tet.setText(penz + " Ft");
         }
     }
     public void onEgyclick(){
         if(Integer.parseInt(ertek.getText().split(" ")[0])>1) {
             bet -= 1;
-            tet.setText(bet + " Ft");
+            penz+=1;
+            tet.setText(penz + " Ft");
         }
     }
     public void on25click(){
         if(Integer.parseInt(ertek.getText().split(" ")[0])>25) {
             bet -= 25;
-            tet.setText(bet + " Ft");
+            penz+=25;
+            tet.setText(penz + " Ft");
         }
     }
     public void on50click(){
         if(Integer.parseInt(ertek.getText().split(" ")[0])>50) {
             bet -= 50;
-            tet.setText(bet + " Ft");
+            penz+=50;
+            tet.setText(penz + " Ft");
         }
     }
 }
