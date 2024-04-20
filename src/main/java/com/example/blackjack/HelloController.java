@@ -52,7 +52,7 @@ public class HelloController {
     public void initialize(){
         bc.setOnMouseClicked(this::handleBackgroundClick);
         try {
-            socket=new DatagramSocket(678);
+            socket=new DatagramSocket();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -132,6 +132,7 @@ public class HelloController {
     private void onFogad(String uzenet, String ip, int port) {
         String[] s=uzenet.split(":");
         if(s[0].equals("joined")){
+            System.out.println("uzenet = " + uzenet);
             bet=Integer.parseInt(s[1]);
             ertek.setText(s[1]+" Ft");
         }
@@ -175,7 +176,7 @@ public class HelloController {
         }
 
         if(s[0].equals("paid")){
-            ertek.setText(s[1]+ertek.getText()+" Ft");
+            ertek.setText(bet+" Ft");
         }
         if(s[0].equals("k")){
             System.out.printf(uzenet);
@@ -208,7 +209,7 @@ public class HelloController {
 
         }
         if(s[0].equals("balance")){
-            ertek.setText(s[1]+ertek.getText()+" Ft");
+            ertek.setText(Integer.parseInt(ertek.getText().split(" ")[0])+bet+" Ft");
         }
 
     }
@@ -231,9 +232,7 @@ public class HelloController {
 
 
     }
-    public void onResetClick(){
-        tet.setText("0 Ft");
-    }
+
     public void onHitclick(){
         kuld("hit",server.getText(),678);
     }
@@ -241,10 +240,15 @@ public class HelloController {
         kuld("stand",server.getText(),678);
     }
 
+
+    //Tét adás
     public void sendTet(){
-        ertek.setText(Integer.parseInt(ertek.getText().split(" ")[0])-(bet)+" Ft");
+        g.setDisable(true);
+        ertek.setText(Integer.parseInt(ertek.getText().split(" ")[0])-Integer.parseInt(tet.getText().split(" ")[0])+" Ft");
         kuld("bet:"+bet,server.getText(),678);
     }
+
+    //Kilépés
     public void onKilepclick(){
         kuld("exit",server.getText(),678);
         n=580;o=514;
@@ -266,6 +270,10 @@ public class HelloController {
         penz=0;
         tet.setText("0 Ft");
     }
+
+
+
+    // Pénzek
 
     public void on100click() {
         if (Integer.parseInt(ertek.getText().split(" ")[0]) > 100) {
@@ -294,5 +302,9 @@ public class HelloController {
             penz+=50;
             tet.setText(penz + " Ft");
         }
+    }
+    public void onResetClick(){
+        penz=0;
+        tet.setText("0 Ft");
     }
 }
