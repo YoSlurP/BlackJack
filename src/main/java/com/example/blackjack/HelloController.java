@@ -40,8 +40,7 @@ public class HelloController {
     public LinkedList<ImageView >oszto= new LinkedList<>();
     public LinkedList<ImageView >jatekos= new LinkedList<>();
     public int n=610,o=534;
-    public int r=708,e=307;
-    public int l=0;
+    public int r=728,e=307;
     public String[] tabla= {"1","2","3","4","5"};
     public int[] cordx= {610,907,791,978,453,346,236};
     public int[] cordy= {636,503,574,402,596,537,402};
@@ -132,7 +131,6 @@ public class HelloController {
     private void onFogad(String uzenet, String ip, int port) {
         String[] s=uzenet.split(":");
         if(s[0].equals("joined")){
-            System.out.println("uzenet = " + uzenet);
             bet=Integer.parseInt(s[1]);
             ertek.setText(s[1]+" Ft");
         }
@@ -147,7 +145,6 @@ public class HelloController {
 
         if(s[0].equals("s")){
             if(oszto.size()==0){
-                System.out.printf(uzenet);
                 ImageView asd=new ImageView(new Image(getClass().getResourceAsStream(s[1]+".png")));
                 asd.setLayoutX(r);asd.setLayoutY(e);asd.setFitHeight(100);asd.setFitWidth(90);
                 pnJatek.getChildren().add(asd);
@@ -156,18 +153,13 @@ public class HelloController {
                 pnJatek.getChildren().add(as);
                 oszto.add(asd);
                 oszto.add(as);
-                if(s[1].charAt(1)=='A'){
-                    s[1].equals("1/11");
-                }
-                //countS.setText(String.valueOf(Integer.parseInt(countS.getText()+s[1])));
             }else if(oszto.size()==2){
                 oszto.get(1).setImage(new Image(getClass().getResourceAsStream(s[1]+ ".png")));
                 oszto.add(new ImageView());
             }else {
-                r=r-80;
+                r=r-100;
                 ImageView asd=new ImageView(new Image(getClass().getResourceAsStream(s[1]+ ".png")));
                 asd.setLayoutX(r-100);asd.setLayoutY(e);asd.setFitHeight(100);asd.setFitWidth(90);
-                //countS.setText(String.valueOf(Integer.parseInt(countS.getText()+s[1])));
                 pnJatek.getChildren().add(asd);
             }
         }
@@ -176,12 +168,10 @@ public class HelloController {
             ertek.setText(bet+" Ft");
         }
         if(s[0].equals("k")){
-            System.out.printf(uzenet);
             ImageView a=new ImageView(new Image(getClass().getResourceAsStream(s[1]+ ".png")));
             a.setLayoutX(610+40*kartyak.size());a.setLayoutY(534-40*kartyak.size());
             a.setFitHeight(100);a.setFitWidth(90);
             pnJatek.getChildren().add(a);
-            //countK.setText(String.valueOf(Integer.parseInt(countK.getText()+s[1])));
             kartyak.add(a);
         }
         if(s[0].equals("end")){
@@ -257,8 +247,8 @@ public class HelloController {
             pnJatek.getChildren().remove(jatekos.get(i));
         }
         jatekos.clear();
-        countS.setText("0");
-        countK.setText("0");
+        countS.setText("Osztó: 0");
+        countK.setText("Játékos: 0");
         penz=0;
         tet.setText("0 Ft");
     }
@@ -268,28 +258,28 @@ public class HelloController {
     // Pénzek
 
     public void on100click() {
-        if (Integer.parseInt(ertek.getText().split(" ")[0]) > 100) {
+        if (Integer.parseInt(ertek.getText().split(" ")[0]) >= 100) {
             bet -= 100;
             penz+=100;
             tet.setText(penz + " Ft");
         }
     }
     public void onEgyclick(){
-        if(Integer.parseInt(ertek.getText().split(" ")[0])>1) {
+        if(Integer.parseInt(ertek.getText().split(" ")[0])>=1) {
             bet -= 1;
             penz+=1;
             tet.setText(penz + " Ft");
         }
     }
     public void on25click(){
-        if(Integer.parseInt(ertek.getText().split(" ")[0])>25) {
+        if(Integer.parseInt(ertek.getText().split(" ")[0])>=25) {
             bet -= 25;
             penz+=25;
             tet.setText(penz + " Ft");
         }
     }
     public void on50click(){
-        if(Integer.parseInt(ertek.getText().split(" ")[0])>50) {
+        if(Integer.parseInt(ertek.getText().split(" ")[0])>=50) {
             bet -= 50;
             penz+=50;
             tet.setText(penz + " Ft");

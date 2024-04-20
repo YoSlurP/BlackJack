@@ -4,6 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <VBox fx:id="bc" onKeyPressed="#onKeyPressed" spacing="5.0" style="-fx-background-color: linear-gradient(to right bottom, #015294, #02f1f5);" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.blackjack.HelloController">
     <padding>
@@ -47,8 +48,14 @@
                         <Image url="@dealer.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="countK" layoutX="626.0" layoutY="596.0" text="0" />
-                  <Label fx:id="countS" layoutX="626.0" layoutY="294.0" text="0" />
+                  <Label fx:id="countK" layoutX="102.0" layoutY="653.0" text="Játékos: 0">
+                     <font>
+                        <Font size="18.0" />
+                     </font></Label>
+                  <Label fx:id="countS" layoutX="1108.0" layoutY="653.0" text="Osztó: 0">
+                     <font>
+                        <Font size="18.0" />
+                     </font></Label>
                </children>
             </Pane>
             <ImageView fitHeight="100.0" fitWidth="100.0" onMouseClicked="#onRigthclick" pickOnBounds="true" preserveRatio="true">
