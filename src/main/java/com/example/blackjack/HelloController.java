@@ -140,10 +140,7 @@ public class HelloController {
         if(s[0].equals("start")) {
             for(int i=0;i<Integer.parseInt(s[1]);i++){
                 ImageView p=new ImageView(new Image(getClass().getResourceAsStream("Male.png")));
-                jatekos.add(p);
-                p.setFitWidth(128);p.setFitHeight(128);
-                p.setLayoutX(cordx[i]);
-                p.setLayoutY(cordy[i]);
+                jatekos.add(p);p.setFitWidth(128);p.setFitHeight(128);p.setLayoutX(cordx[i]);p.setLayoutY(cordy[i]);
                 pnJatek.getChildren().add(p);
             }
         }
@@ -213,25 +210,20 @@ public class HelloController {
         }
 
     }
+
+    //Asztalok
+
     public int a=1;
     public void onRigthclick(){
-        if(a==5){
-            a=0;
-        }
-        asztal.setImage(new Image(getClass().getResourceAsStream("asztal"+tabla[a]+".png")));
-        a++;
-
-
+        if(a==5)a=0;asztal.setImage(new Image(getClass().getResourceAsStream("asztal"+tabla[a]+".png")));a++;
     }
     public void onLeftclick(){
-        if(a==0){
-            a=5;
-        }
-        a--;
-        asztal.setImage(new Image(getClass().getResourceAsStream("asztal"+tabla[a]+".png")));
-
-
+        if(a==0)a=5;a--;asztal.setImage(new Image(getClass().getResourceAsStream("asztal"+tabla[a]+".png")));
     }
+
+
+
+    //Gombok
 
     public void onHitclick(){
         kuld("hit",server.getText(),678);
