@@ -33,6 +33,8 @@ public class HelloController {
     @FXML private VBox bc;
     @FXML private Pane pnJatek;
     @FXML private Button g;
+    @FXML private Button cs;
+    @FXML private Button k;
     @FXML private ImageView asztal;
     public int bet=0;
     public int penz=0;
@@ -101,6 +103,8 @@ public class HelloController {
 
     public void join(){
         kuld("join:"+belepes.getText(), server.getText(),678);
+        k.setDisable(false);
+        cs.setDisable(true);
     }
 
     private void kuld(String uzenet, String ip, int port) {
@@ -160,6 +164,7 @@ public class HelloController {
                 r=r-100;
                 ImageView asd=new ImageView(new Image(getClass().getResourceAsStream(s[1]+ ".png")));
                 asd.setLayoutX(r-100);asd.setLayoutY(e);asd.setFitHeight(100);asd.setFitWidth(90);
+                oszto.add(asd);
                 pnJatek.getChildren().add(asd);
             }
         }
@@ -176,27 +181,18 @@ public class HelloController {
         }
         if(s[0].equals("end")){
             n=580;o=514;
+            r=728;
+            penz=0;
             g.setDisable(false);
-            for(int i=0;i<oszto.size();i++){
-                pnJatek.getChildren().remove(oszto.get(i));
-            }
-            oszto.clear();
-            for(int i=0;i<kartyak.size();i++){
-                pnJatek.getChildren().remove(kartyak.get(i));
-            }
-            kartyak.clear();
-            for(int i=0;i<jatekos.size();i++){
-                pnJatek.getChildren().remove(jatekos.get(i));
-            }
-            jatekos.clear();
+
             countS.setText("0");
             countK.setText("0");
-            penz=0;
             tet.setText("0 Ft");
+
 
         }
         if(s[0].equals("balance")){
-            ertek.setText(Integer.parseInt(ertek.getText().split(" ")[0])+bet+" Ft");
+            ertek.setText(Integer.parseInt(ertek.getText().split(" ")[0])+Integer.parseInt(s[1])+" Ft");
         }
 
     }
@@ -226,6 +222,14 @@ public class HelloController {
     //Tét adás
     public void sendTet(){
         g.setDisable(true);
+        for(int i=0;i<oszto.size();i++){
+            pnJatek.getChildren().remove(oszto.get(i));
+        }
+        oszto.clear();
+        for(int i=0;i<kartyak.size();i++){
+            pnJatek.getChildren().remove(kartyak.get(i));
+        }
+        kartyak.clear();
         ertek.setText(Integer.parseInt(ertek.getText().split(" ")[0])-Integer.parseInt(tet.getText().split(" ")[0])+" Ft");
         kuld("bet:"+bet,server.getText(),678);
     }
@@ -233,6 +237,8 @@ public class HelloController {
     //Kilépés
     public void onKilepclick(){
         kuld("exit",server.getText(),678);
+        k.setDisable(true);
+        cs.setDisable(false);
         n=580;o=514;
         g.setDisable(false);
         for(int i=0;i<oszto.size();i++){
@@ -250,6 +256,7 @@ public class HelloController {
         countS.setText("Osztó: 0");
         countK.setText("Játékos: 0");
         penz=0;
+        r=728;
         tet.setText("0 Ft");
     }
 
