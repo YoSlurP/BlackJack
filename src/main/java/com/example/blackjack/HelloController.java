@@ -12,9 +12,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import java.io.File;
 import javafx.scene.text.Text;
-
 import javafx.scene.input.MouseEvent;
+import javax.print.attribute.standard.Media;
 import java.net.*;
 import java.util.LinkedList;
 import java.util.Map;
@@ -35,9 +36,13 @@ public class HelloController {
     @FXML private Button g;
     @FXML private Button cs;
     @FXML private Button k;
+    @FXML private Button ht;
+    @FXML private Button st;
     @FXML private ImageView asztal;
+    String musicFile = "Lady.mp3";
     public int bet=0;
     public int penz=0;
+    public int betss=0;
     public LinkedList<ImageView >kartyak= new LinkedList<>();
     public LinkedList<ImageView >oszto= new LinkedList<>();
     public LinkedList<ImageView >jatekos= new LinkedList<>();
@@ -52,6 +57,8 @@ public class HelloController {
 
     public void initialize(){
         bc.setOnMouseClicked(this::handleBackgroundClick);
+        Media sound = new Media(new File(musicFile).toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(sound);
         try {
             socket=new DatagramSocket();
         } catch (Exception e) {
@@ -66,6 +73,15 @@ public class HelloController {
         fogadas.setDaemon(true);
         fogadas.start();
 
+    }
+    @FXML
+    public void playMusic() {
+        mediaPlayer.play();
+    }
+
+    @FXML
+    public void stopMusic() {
+        mediaPlayer.stop();
     }
     private void handleBackgroundClick(MouseEvent event) {
         bc.requestFocus();
@@ -100,11 +116,41 @@ public class HelloController {
         secretStage.getIcons().add(new Image(getClass().getResourceAsStream("card.png")));
         secretStage.show();
     }
-
+    //Belépés
     public void join(){
         kuld("join:"+belepes.getText(), server.getText(),678);
         k.setDisable(false);
         cs.setDisable(true);
+        belepes.setDisable(true);
+        bc.requestFocus();
+    }
+
+
+    //Kilépés
+    public void onKilepclick(){
+        kuld("exit",server.getText(),678);
+        k.setDisable(true);
+        cs.setDisable(false);
+        n=580;o=514;
+        g.setDisable(false);
+        for(int i=0;i<oszto.size();i++){
+            pnJatek.getChildren().remove(oszto.get(i));
+        }
+        oszto.clear();
+        for(int i=0;i<kartyak.size();i++){
+            pnJatek.getChildren().remove(kartyak.get(i));
+        }
+        kartyak.clear();
+        for(int i=0;i<jatekos.size();i++){
+            pnJatek.getChildren().remove(jatekos.get(i));
+        }
+        jatekos.clear();
+        countS.setText("Osztó: 0");
+        countK.setText("Játékos: 0");
+        penz=0;
+        r=728;
+        tet.setText("0 Ft");
+        belepes.setText(ertek.getText().split(" ")[0]);
     }
 
     private void kuld(String uzenet, String ip, int port) {
@@ -134,9 +180,10 @@ public class HelloController {
 
     private void onFogad(String uzenet, String ip, int port) {
         String[] s=uzenet.split(":");
+        System.out.println("messsege"+uzenet);
         if(s[0].equals("joined")){
             bet=Integer.parseInt(s[1]);
-            ertek.setText(s[1]+" Ft");
+            ertek.setText(bet+" Ft");
         }
 
         if(s[0].equals("start")) {
@@ -145,15 +192,24 @@ public class HelloController {
                 jatekos.add(p);p.setFitWidth(128);p.setFitHeight(128);p.setLayoutX(cordx[i]);p.setLayoutY(cordy[i]);
                 pnJatek.getChildren().add(p);
             }
+            for (ImageView imageView : oszto) {
+                pnJatek.getChildren().remove(imageView);
+            }
+            oszto.clear();
+            for (ImageView imageView : kartyak) {
+                pnJatek.getChildren().remove(imageView);
+            }
+            kartyak.clear();
+            g.setDisable(false);
         }
 
         if(s[0].equals("s")){
             if(oszto.size()==0){
                 ImageView asd=new ImageView(new Image(getClass().getResourceAsStream(s[1]+".png")));
-                asd.setLayoutX(r);asd.setLayoutY(e);asd.setFitHeight(100);asd.setFitWidth(90);
+                asd.setLayoutX(r);asd.setLayoutY(e);asd.setFitHeight(130);asd.setFitWidth(110);
                 pnJatek.getChildren().add(asd);
                 ImageView as=new ImageView(new Image(getClass().getResourceAsStream("card back black.png")));
-                as.setLayoutX(r-100);as.setLayoutY(e);as.setFitHeight(100);as.setFitWidth(90);
+                as.setLayoutX(r-120);as.setLayoutY(e);as.setFitHeight(130);as.setFitWidth(110);
                 pnJatek.getChildren().add(as);
                 oszto.add(asd);
                 oszto.add(as);
@@ -161,38 +217,40 @@ public class HelloController {
                 oszto.get(1).setImage(new Image(getClass().getResourceAsStream(s[1]+ ".png")));
                 oszto.add(new ImageView());
             }else {
-                r=r-100;
+                r=r-120;
                 ImageView asd=new ImageView(new Image(getClass().getResourceAsStream(s[1]+ ".png")));
-                asd.setLayoutX(r-100);asd.setLayoutY(e);asd.setFitHeight(100);asd.setFitWidth(90);
+                asd.setLayoutX(r-120);asd.setLayoutY(e);asd.setFitHeight(130);asd.setFitWidth(110);
                 oszto.add(asd);
                 pnJatek.getChildren().add(asd);
             }
         }
 
         if(s[0].equals("paid")){
-            ertek.setText(bet+" Ft");
+            ertek.setText(s[1]+" Ft");
+            bet=bet+Integer.parseInt(s[1]);
         }
         if(s[0].equals("k")){
             ImageView a=new ImageView(new Image(getClass().getResourceAsStream(s[1]+ ".png")));
             a.setLayoutX(610+40*kartyak.size());a.setLayoutY(534-40*kartyak.size());
-            a.setFitHeight(100);a.setFitWidth(90);
+            a.setFitHeight(130);a.setFitWidth(110);
             pnJatek.getChildren().add(a);
             kartyak.add(a);
+            ht.setDisable(false);
+            st.setDisable(false);
         }
         if(s[0].equals("end")){
             n=580;o=514;
             r=728;
             penz=0;
-            g.setDisable(false);
-
             countS.setText("0");
             countK.setText("0");
             tet.setText("0 Ft");
-
-
+            ht.setDisable(true);
+            st.setDisable(true);
         }
         if(s[0].equals("balance")){
-            ertek.setText(Integer.parseInt(ertek.getText().split(" ")[0])+Integer.parseInt(s[1])+" Ft");
+            bet=bet+Integer.parseInt(s[1]);
+            ertek.setText(bet+" Ft");
         }
 
     }
@@ -222,71 +280,38 @@ public class HelloController {
     //Tét adás
     public void sendTet(){
         g.setDisable(true);
-        for(int i=0;i<oszto.size();i++){
-            pnJatek.getChildren().remove(oszto.get(i));
-        }
-        oszto.clear();
-        for(int i=0;i<kartyak.size();i++){
-            pnJatek.getChildren().remove(kartyak.get(i));
-        }
-        kartyak.clear();
         ertek.setText(Integer.parseInt(ertek.getText().split(" ")[0])-Integer.parseInt(tet.getText().split(" ")[0])+" Ft");
-        kuld("bet:"+bet,server.getText(),678);
+        betss=penz;
+        bc.requestFocus();
+        kuld("bet:"+penz,server.getText(),678);
     }
-
-    //Kilépés
-    public void onKilepclick(){
-        kuld("exit",server.getText(),678);
-        k.setDisable(true);
-        cs.setDisable(false);
-        n=580;o=514;
-        g.setDisable(false);
-        for(int i=0;i<oszto.size();i++){
-            pnJatek.getChildren().remove(oszto.get(i));
-        }
-        oszto.clear();
-        for(int i=0;i<kartyak.size();i++){
-            pnJatek.getChildren().remove(kartyak.get(i));
-        }
-        kartyak.clear();
-        for(int i=0;i<jatekos.size();i++){
-            pnJatek.getChildren().remove(jatekos.get(i));
-        }
-        jatekos.clear();
-        countS.setText("Osztó: 0");
-        countK.setText("Játékos: 0");
-        penz=0;
-        r=728;
-        tet.setText("0 Ft");
-    }
-
 
 
     // Pénzek
 
     public void on100click() {
-        if (Integer.parseInt(ertek.getText().split(" ")[0]) >= 100) {
+        if (bet >= 100) {
             bet -= 100;
             penz+=100;
             tet.setText(penz + " Ft");
         }
     }
     public void onEgyclick(){
-        if(Integer.parseInt(ertek.getText().split(" ")[0])>=1) {
+        if(bet>=1) {
             bet -= 1;
             penz+=1;
             tet.setText(penz + " Ft");
         }
     }
     public void on25click(){
-        if(Integer.parseInt(ertek.getText().split(" ")[0])>=25) {
+        if(bet>=25) {
             bet -= 25;
             penz+=25;
             tet.setText(penz + " Ft");
         }
     }
     public void on50click(){
-        if(Integer.parseInt(ertek.getText().split(" ")[0])>=50) {
+        if(bet>=50) {
             bet -= 50;
             penz+=50;
             tet.setText(penz + " Ft");
@@ -295,5 +320,9 @@ public class HelloController {
     public void onResetClick(){
         penz=0;
         tet.setText("0 Ft");
+    }
+    public void onujraclick(){
+        penz=betss;
+        tet.setText(betss+" Ft");
     }
 }
