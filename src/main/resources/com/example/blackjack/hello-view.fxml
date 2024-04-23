@@ -16,13 +16,13 @@
             <Label alignment="CENTER" text="Pénz:" textFill="WHITE" />
             <Label fx:id="ertek" text="0 Ft" textFill="WHITE" />
             <Label maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-            <Button fx:id="cs" mnemonicParsing="false" onAction="#join" onMousePressed="#playMusic" text="Csatlakozás:" />
+            <Button fx:id="cs" mnemonicParsing="false" onAction="#join"  text="Csatlakozás:" />
             <Label text="Ip:" />
             <TextField fx:id="server" text="localhost" />
             <Label text="Belépési érték:" />
             <TextField fx:id="belepes" />
             <Label maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-            <Button fx:id="k" disable="true" mnemonicParsing="false" onAction="#onKilepclick" onMousePressed="#stopMusic" text="Kilép" />
+            <Button fx:id="k" disable="true" mnemonicParsing="false" onAction="#onKilepclick" text="Kilép" />
          </children>
          <padding>
             <Insets top="5.0" />

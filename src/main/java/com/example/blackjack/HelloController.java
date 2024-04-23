@@ -11,14 +11,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.Media;
 import javafx.stage.Stage;
-import java.io.File;
-import javafx.scene.text.Text;
 import javafx.scene.input.MouseEvent;
-import javax.print.attribute.standard.Media;
 import java.net.*;
 import java.util.LinkedList;
-import java.util.Map;
 
 public class HelloController {
 
@@ -39,7 +37,6 @@ public class HelloController {
     @FXML private Button ht;
     @FXML private Button st;
     @FXML private ImageView asztal;
-    String musicFile = "Lady.mp3";
     public int bet=0;
     public int penz=0;
     public int betss=0;
@@ -54,11 +51,13 @@ public class HelloController {
 
     private final String KONAMI_CODE = "UUDDLRLRBA";
     private int index = 0;
+    private MediaPlayer mediaPlayer;
+    String musicFile = "Lady.mp3";
 
     public void initialize(){
         bc.setOnMouseClicked(this::handleBackgroundClick);
-        Media sound = new Media(new File(musicFile).toURI().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(sound);
+        Media buzzer = new Media(getClass().getResource(musicFile).toExternalForm());
+        mediaPlayer = new MediaPlayer(buzzer);
         try {
             socket=new DatagramSocket();
         } catch (Exception e) {
@@ -75,14 +74,6 @@ public class HelloController {
 
     }
     @FXML
-    public void playMusic() {
-        mediaPlayer.play();
-    }
-
-    @FXML
-    public void stopMusic() {
-        mediaPlayer.stop();
-    }
     private void handleBackgroundClick(MouseEvent event) {
         bc.requestFocus();
     }
@@ -123,12 +114,14 @@ public class HelloController {
         cs.setDisable(true);
         belepes.setDisable(true);
         bc.requestFocus();
+        mediaPlayer.play();
     }
 
 
     //Kilépés
     public void onKilepclick(){
         kuld("exit",server.getText(),678);
+        mediaPlayer.stop();
         k.setDisable(true);
         cs.setDisable(false);
         n=580;o=514;

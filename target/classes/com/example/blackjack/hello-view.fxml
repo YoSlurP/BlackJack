@@ -16,7 +16,7 @@
             <Label alignment="CENTER" text="Pénz:" textFill="WHITE" />
             <Label fx:id="ertek" text="0 Ft" textFill="WHITE" />
             <Label maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-            <Button fx:id="cs" mnemonicParsing="false" onAction="#join" text="Csatlakozás:" />
+            <Button fx:id="cs" mnemonicParsing="false" onAction="#join"  text="Csatlakozás:" />
             <Label text="Ip:" />
             <TextField fx:id="server" text="localhost" />
             <Label text="Belépési érték:" />
@@ -42,7 +42,6 @@
                         <Image url="@asztal1.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="70.0" fitWidth="60.0" layoutX="610.0" layoutY="534.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fitHeight="284.0" fitWidth="571.0" layoutX="372.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@dealer.png" />
@@ -67,12 +66,21 @@
       </HBox>
       <HBox alignment="CENTER" spacing="5.0">
          <children>
-            <Button fx:id="hjk" mnemonicParsing="false" onAction="#onHitclick" prefWidth="100.0" text="Hit" />
-            <Button mnemonicParsing="false" onAction="#onStandclick" prefWidth="100.0" text="Stand" />
+            <Button fx:id="ht" disable="true" mnemonicParsing="false" onAction="#onHitclick" prefWidth="100.0" text="Hit" />
+            <Button fx:id="st" disable="true" mnemonicParsing="false" onAction="#onStandclick" prefWidth="100.0" text="Stand" />
             <Label maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-            <Button fx:id="g" mnemonicParsing="false" onAction="#sendTet" text="Tét:" />
+            <Button fx:id="g" disable="true" mnemonicParsing="false" onAction="#sendTet" text="Tét:" />
             <Label fx:id="tet" text="0 Ft" />
             <Label maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+            <Label onMouseClicked="#onujraclick">
+               <graphic>
+                  <ImageView fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@repeat.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Label>
             <Label onMouseClicked="#onEgyclick">
                <graphic>
                   <ImageView fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
