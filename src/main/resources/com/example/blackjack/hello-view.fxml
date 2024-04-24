@@ -4,9 +4,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 
-<VBox fx:id="bc" onKeyPressed="#onKeyPressed" spacing="5.0" style="-fx-background-color: linear-gradient(to right bottom, #015294, #02f1f5);" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.blackjack.HelloController">
+<VBox fx:id="bc" onKeyPressed="#onKeyPressed" spacing="5.0" style="-fx-background-color: linear-gradient(to right bottom, #015294, #02f1f5);" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.blackjack.HelloController">
     <padding>
         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
     </padding>
@@ -16,7 +15,7 @@
             <Label alignment="CENTER" text="Pénz:" textFill="WHITE" />
             <Label fx:id="ertek" text="0 Ft" textFill="WHITE" />
             <Label maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-            <Button fx:id="cs" mnemonicParsing="false" onAction="#join"  text="Csatlakozás:" />
+            <Button fx:id="cs" mnemonicParsing="false" onAction="#join" text="Csatlakozás:" />
             <Label text="Ip:" />
             <TextField fx:id="server" text="localhost" />
             <Label text="Belépési érték:" />
@@ -47,14 +46,11 @@
                         <Image url="@dealer.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="countK" layoutX="102.0" layoutY="653.0" text="Játékos: 0">
-                     <font>
-                        <Font size="18.0" />
-                     </font></Label>
-                  <Label fx:id="countS" layoutX="1108.0" layoutY="653.0" text="Osztó: 0">
-                     <font>
-                        <Font size="18.0" />
-                     </font></Label>
+                  <ImageView fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@audio.png" />
+                     </image></ImageView>
+                  <Slider fx:id="slide" layoutX="52.0" layoutY="19.0" max="1.0" prefWidth="1.0" />
                </children>
             </Pane>
             <ImageView fitHeight="100.0" fitWidth="100.0" onMouseClicked="#onRigthclick" pickOnBounds="true" preserveRatio="true">
@@ -68,8 +64,7 @@
          <children>
             <Button fx:id="ht" disable="true" mnemonicParsing="false" onAction="#onHitclick" prefWidth="100.0" text="Hit" />
             <Button fx:id="st" disable="true" mnemonicParsing="false" onAction="#onStandclick" prefWidth="100.0" text="Stand" />
-            <Label maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-            <Button fx:id="g" disable="true" mnemonicParsing="false" onAction="#sendTet" text="Tét:" />
+            <Button fx:id="g" disable="true" mnemonicParsing="false" onAction="#sendTet" prefWidth="100.0" text="Tét:" />
             <Label fx:id="tet" text="0 Ft" />
             <Label maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
             <Label onMouseClicked="#onujraclick">
@@ -79,6 +74,14 @@
                         <Image url="@repeat.png" />
                      </image>
                   </ImageView>
+               </graphic>
+            </Label>
+            <Label onMousePressed="#onDoubleclick">
+               <graphic>
+                  <ImageView fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@double.png" />
+                     </image></ImageView>
                </graphic>
             </Label>
             <Label onMouseClicked="#onEgyclick">

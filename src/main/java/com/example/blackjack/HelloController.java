@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -37,6 +38,7 @@ public class HelloController {
     @FXML private Button ht;
     @FXML private Button st;
     @FXML private ImageView asztal;
+    @FXML private Slider slide;
     public int bet=0;
     public int penz=0;
     public int betss=0;
@@ -58,6 +60,7 @@ public class HelloController {
         bc.setOnMouseClicked(this::handleBackgroundClick);
         Media buzzer = new Media(getClass().getResource(musicFile).toExternalForm());
         mediaPlayer = new MediaPlayer(buzzer);
+        mediaPlayer.setAutoPlay(true);
         try {
             socket=new DatagramSocket();
         } catch (Exception e) {
@@ -81,7 +84,6 @@ public class HelloController {
     @FXML
     private void onKeyPressed(javafx.scene.input.KeyEvent event) {
         if (!bc.isFocused()) return;
-
         if (event.getText().equalsIgnoreCase(Character.toString(KONAMI_CODE.charAt(index)))) {
             index++;
             if (index == KONAMI_CODE.length()) {
@@ -114,14 +116,12 @@ public class HelloController {
         cs.setDisable(true);
         belepes.setDisable(true);
         bc.requestFocus();
-        mediaPlayer.play();
     }
 
 
     //Kilépés
     public void onKilepclick(){
         kuld("exit",server.getText(),678);
-        mediaPlayer.stop();
         k.setDisable(true);
         cs.setDisable(false);
         n=580;o=514;
@@ -245,6 +245,11 @@ public class HelloController {
             bet=bet+Integer.parseInt(s[1]);
             ertek.setText(bet+" Ft");
         }
+        if(slide.getValue()==1){
+            mediaPlayer.setVolume(100);
+        }else if(slide.getValue()==0){
+            mediaPlayer.setVolume(0);
+        }
 
     }
 
@@ -316,6 +321,12 @@ public class HelloController {
     }
     public void onujraclick(){
         penz=betss;
+        bet-=betss;
         tet.setText(betss+" Ft");
+    }
+    public void onDoubleclick(){
+        penz=penz*2;
+        bet-=penz;
+        tet.setText(penz+" Ft");
     }
 }
