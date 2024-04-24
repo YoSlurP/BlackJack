@@ -19,7 +19,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 
 import java.net.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class HelloController {
 
@@ -54,6 +56,8 @@ public class HelloController {
     private final String KONAMI_CODE = "UUDDLRLRBA";
     private int index = 0;
     private MediaPlayer mediaPlayer;
+    private List<Media> playlist;
+    private int current;
     public String[] musicFile = {"Lady.mp3","better.mp3","gimmi.mp3"};
     public int t=0;
 
@@ -65,17 +69,23 @@ public class HelloController {
         }
     }
     public void szam(){
-        t++;
-        if(t==3){
-            t=0;
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
         }
+        current = (current + 1) % playlist.size();
+        mediaPlayer = new MediaPlayer(playlist.get(current));
+        mediaPlayer.play();
 
     }
 
     public void initialize(){
         bc.setOnMouseClicked(this::handleBackgroundClick);
-        Media buzzer = new Media(getClass().getResource(musicFile[t]).toExternalForm());
-        mediaPlayer = new MediaPlayer(buzzer);
+        playlist= new ArrayList<>();
+        current=0;
+        playlist.add(new Media(getClass().getResource("Lady.mp3").toString()));
+        playlist.add(new Media(getClass().getResource("better.mp3").toString()));
+        playlist.add(new Media(getClass().getResource("gimmi.mp3").toString()));
+        mediaPlayer = new MediaPlayer(playlist.get(current));
         mediaPlayer.setAutoPlay(true);
         mediaPlayer.setVolume(0);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
