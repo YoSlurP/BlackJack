@@ -41,25 +41,37 @@ public class HelloController {
     @FXML private Button st;
     @FXML private ImageView asztal;
     @FXML private Slider slide;
+
+    //PénzMatek
     public int bet=0;
     public int penz=0;
     public int betss=0;
+
+
+    //Képeknek
     public LinkedList<ImageView >kartyak= new LinkedList<>();
     public LinkedList<ImageView >oszto= new LinkedList<>();
     public LinkedList<ImageView >jatekos= new LinkedList<>();
+
+    //Kártyál helye
     public int n=610,o=534;
     public int r=728,e=307;
+
+    //Asztalok
     public String[] tabla= {"1","2","3","4","5"};
+
+    //Emberek helye
     public int[] cordx= {610,907,791,978,453,346,236};
     public int[] cordy= {636,503,574,402,596,537,402};
 
+    //Konami
     private final String KONAMI_CODE = "UUDDLRLRBA";
     private int index = 0;
+
+    //Zene
     private MediaPlayer mediaPlayer;
     private List<Media> playlist;
     private int current;
-    public String[] musicFile = {"Lady.mp3","better.mp3","gimmi.mp3"};
-    public int t=0;
 
     public void onmusicclick(){
         if((int)slide.getValue()==0){
@@ -90,7 +102,7 @@ public class HelloController {
         mediaPlayer.setVolume(0);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         try {
-            socket=new DatagramSocket(678);
+            socket=new DatagramSocket();
         } catch (Exception e) {
             e.printStackTrace();
         }
