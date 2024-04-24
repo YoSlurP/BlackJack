@@ -16,6 +16,8 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.Media;
 import javafx.stage.Stage;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Duration;
+
 import java.net.*;
 import java.util.LinkedList;
 
@@ -28,8 +30,6 @@ public class HelloController {
     @FXML private TextField server;
     @FXML private Label ertek;
     @FXML private Label tet;
-    @FXML private Label countS;
-    @FXML private Label countK;
     @FXML private VBox bc;
     @FXML private Pane pnJatek;
     @FXML private Button g;
@@ -54,15 +54,33 @@ public class HelloController {
     private final String KONAMI_CODE = "UUDDLRLRBA";
     private int index = 0;
     private MediaPlayer mediaPlayer;
-    String musicFile = "Lady.mp3";
+    public String[] musicFile = {"Lady.mp3","better.mp3","gimmi.mp3"};
+    public int t=0;
+
+    public void onmusicclick(){
+        if((int)slide.getValue()==0){
+            mediaPlayer.setVolume(100);
+        }else if((int)slide.getValue()==1){
+            mediaPlayer.setVolume(0);
+        }
+    }
+    public void szam(){
+        t++;
+        if(t==3){
+            t=0;
+        }
+
+    }
 
     public void initialize(){
         bc.setOnMouseClicked(this::handleBackgroundClick);
-        Media buzzer = new Media(getClass().getResource(musicFile).toExternalForm());
+        Media buzzer = new Media(getClass().getResource(musicFile[t]).toExternalForm());
         mediaPlayer = new MediaPlayer(buzzer);
         mediaPlayer.setAutoPlay(true);
+        mediaPlayer.setVolume(0);
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         try {
-            socket=new DatagramSocket();
+            socket=new DatagramSocket(678);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -138,8 +156,6 @@ public class HelloController {
             pnJatek.getChildren().remove(jatekos.get(i));
         }
         jatekos.clear();
-        countS.setText("Osztó: 0");
-        countK.setText("Játékos: 0");
         penz=0;
         r=728;
         tet.setText("0 Ft");
@@ -235,8 +251,6 @@ public class HelloController {
             n=580;o=514;
             r=728;
             penz=0;
-            countS.setText("0");
-            countK.setText("0");
             tet.setText("0 Ft");
             ht.setDisable(true);
             st.setDisable(true);
@@ -245,12 +259,6 @@ public class HelloController {
             bet=bet+Integer.parseInt(s[1]);
             ertek.setText(bet+" Ft");
         }
-        if(slide.getValue()==1){
-            mediaPlayer.setVolume(100);
-        }else if(slide.getValue()==0){
-            mediaPlayer.setVolume(0);
-        }
-
     }
 
     //Asztalok

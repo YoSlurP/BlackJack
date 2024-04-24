@@ -12,6 +12,12 @@
    <children>
       <HBox alignment="CENTER" spacing="5.0">
          <children>
+            <ImageView fitHeight="48.0" fitWidth="48.0" onMousePressed="#szam" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@audio.png" />
+               </image>
+            </ImageView>
+            <Slider fx:id="slide" majorTickUnit="1.0" max="1.0" minorTickCount="1" onMousePressed="#onmusicclick" prefWidth="1.0" />
             <Label alignment="CENTER" text="Pénz:" textFill="WHITE" />
             <Label fx:id="ertek" text="0 Ft" textFill="WHITE" />
             <Label maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
@@ -46,11 +52,6 @@
                         <Image url="@dealer.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@audio.png" />
-                     </image></ImageView>
-                  <Slider fx:id="slide" layoutX="52.0" layoutY="19.0" max="1.0" prefWidth="1.0" />
                </children>
             </Pane>
             <ImageView fitHeight="100.0" fitWidth="100.0" onMouseClicked="#onRigthclick" pickOnBounds="true" preserveRatio="true">

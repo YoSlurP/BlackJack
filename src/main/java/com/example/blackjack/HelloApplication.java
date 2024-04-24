@@ -16,6 +16,7 @@ public class HelloApplication extends Application {
         stage.setTitle("BlackJack");
         stage.getIcons().add(new Image(getClass().getResourceAsStream("blackjack.png")));
         stage.setScene(scene);
+        stage.setFullScreen(true);
         stage.show();
     }
 
