@@ -61,8 +61,8 @@ public class HelloController {
     public String[] tabla= {"1","2","3","4","5"};
 
     //Emberek helye
-    public int[] cordx= {610,907,791,978,453,346,236};
-    public int[] cordy= {636,503,574,402,596,537,402};
+    public int[] cordx= {562,860,308,160,1002};
+    public int[] cordy= {642,553,553,392,392};
 
     //Konami
     private final String KONAMI_CODE = "UUDDLRLRBA";
@@ -138,6 +138,7 @@ public class HelloController {
 
     private void openSecretStage() {
         ImageView cheat= new ImageView(new Image(getClass().getResourceAsStream("cheat.png")));
+        belepes.setDisable(false);
         Stage secretStage = new Stage();
         StackPane root = new StackPane();
         cheat.setFitHeight(700);
@@ -165,7 +166,7 @@ public class HelloController {
         k.setDisable(true);
         cs.setDisable(false);
         n=580;o=514;
-        g.setDisable(false);
+        g.setDisable(true);
         for(int i=0;i<oszto.size();i++){
             pnJatek.getChildren().remove(oszto.get(i));
         }
@@ -258,7 +259,8 @@ public class HelloController {
 
         if(s[0].equals("paid")){
             ertek.setText(s[1]+" Ft");
-            bet=bet+Integer.parseInt(s[1]);
+            bet=Integer.parseInt(s[1]);
+            belepes.setText(bet+"");
         }
         if(s[0].equals("k")){
             ImageView a=new ImageView(new Image(getClass().getResourceAsStream(s[1]+ ".png")));
@@ -278,7 +280,8 @@ public class HelloController {
             st.setDisable(true);
         }
         if(s[0].equals("balance")){
-            bet=Integer.parseInt(s[1])+Integer.parseInt(ertek.getText().split(" ")[0]);
+            bet=Integer.parseInt(s[1]);
+            belepes.setText(bet+"");
             ertek.setText(bet+" Ft");
         }
     }
