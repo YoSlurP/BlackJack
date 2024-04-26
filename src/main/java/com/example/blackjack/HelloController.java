@@ -313,10 +313,17 @@ public class HelloController {
     //Tét adás
     public void sendTet(){
         g.setDisable(true);
-        ertek.setText(Integer.parseInt(ertek.getText().split(" ")[0])-Integer.parseInt(tet.getText().split(" ")[0])+" Ft");
         betss=penz;
         bc.requestFocus();
-        kuld("bet:"+penz,server.getText(),678);
+        if(Integer.parseInt(ertek.getText().split(" ")[0])>0){
+            kuld("bet:"+penz,server.getText(),678);
+            ertek.setText(Integer.parseInt(ertek.getText().split(" ")[0])-Integer.parseInt(tet.getText().split(" ")[0])+" Ft");
+        }else{
+            System.out.println("Nincs elég pénzed");
+            g.setDisable(false);
+            penz=bet;
+        }
+
     }
 
 
@@ -360,8 +367,11 @@ public class HelloController {
         tet.setText(betss+" Ft");
     }
     public void onDoubleclick(){
-        penz=penz*2;
-        bet-=penz;
-        tet.setText(penz+" Ft");
+        if(bet>0){
+            penz=penz*2;
+            bet-=penz;
+            tet.setText(penz+" Ft");
+        }
+
     }
 }
