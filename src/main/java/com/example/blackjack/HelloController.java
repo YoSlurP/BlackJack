@@ -281,7 +281,7 @@ public class HelloController {
             st.setDisable(true);
         }
         if(s[0].equals("balance")){
-            bet=Integer.parseInt(ertek.getText().split(" ")[0])+Integer.parseInt(s[1]);
+            bet=Integer.parseInt(s[1]);
             belepes.setText(bet+"");
             ertek.setText(bet+" Ft");
         }
