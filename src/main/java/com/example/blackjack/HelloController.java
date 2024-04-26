@@ -87,6 +87,7 @@ public class HelloController {
         current = (current + 1) % playlist.size();
         mediaPlayer = new MediaPlayer(playlist.get(current));
         mediaPlayer.play();
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
 
     }
 
@@ -280,10 +281,11 @@ public class HelloController {
             st.setDisable(true);
         }
         if(s[0].equals("balance")){
-            bet=Integer.parseInt(s[1]);
+            bet=Integer.parseInt(ertek.getText().split(" ")[0])+Integer.parseInt(s[1]);
             belepes.setText(bet+"");
             ertek.setText(bet+" Ft");
         }
+
     }
 
     //Asztalok
