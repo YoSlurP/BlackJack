@@ -358,6 +358,7 @@ public class HelloController {
         }
     }
     public void onResetClick(){
+        bet+=penz;
         penz=0;
         tet.setText("0 Ft");
     }
